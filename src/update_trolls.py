@@ -139,7 +139,7 @@ def read_options():
   global VUE_LIST, GOWAPS_LIST
 
   try:
-    options, foo = getopt.getopt (sys.argv[1:], "",
+    options, foo = getopt.getopt (sys.argv[1:], "mev:nabg:dh",
               ['mouche', 'equipement', 'vue=', 'no-profil', 'aptitudes', 'bonus', 'gowaps=',
                'debug', 'help'])
   except getopt.GetoptError, desc:
@@ -147,34 +147,35 @@ def read_options():
     sys.exit(1)
 
   for option, val in options:
-    if option == '--mouche':
+    if option in ('-m', '--mouche'):
       UPDATE_MOUCHE = True
 
-    elif option == '--equipement':
+    elif option in ('-e', '--equipement'):
       UPDATE_EQUIPEMENT = True
 
-    elif option == '--vue':
+    elif option in ('-v', '--vue'):
       if val:
         UPDATE_VUE = True
         VUE_LIST += val.split(',')
 
-    elif option == '--gowaps':
+    elif option in ('-g', '--gowaps'):
       if val:
         UPDATE_GOWAPS = True
         GOWAPS_LIST += val.split(',')
 
-    elif option == '--aptitudes':
+    elif option in ('-a', '--aptitudes'):
       UPDATE_APTITUDES = True
 
-    elif option == '--bonus':
+    elif option in ('-b', '--bonus'):
       UPDATE_BONUS = True
 
-    elif option == '--no-profil':
+    elif option in ('-n', '--no-profil'):
       UPDATE_PROFILE = False
 
-    elif option == '--debug':
+    elif option in ('-d', '--debug'):
       DEBUG = True
-    elif option == '--help':
+
+    elif option in ('-h', '--help'):
       print __doc__
       sys.exit(0)
 
