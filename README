@@ -1,0 +1,33 @@
+                             update_trolls.py
+
+DESCRIPTION
+-----------
+
+This script updates the informations of a guild on some tactical website for a
+role play game.
+Basically, it logs in to the website and calls the updates php webpages.
+It suits well to be launched as a cron job.
+
+
+USAGE
+-----
+
+It requires the mechanize python library.
+Edit src/update_trolls_settings.py then run update_trolls.py --help for a list
+of the availables options.
+
+AVAILABILITY
+------------
+
+  get source from github:
+  http://github.com/fabriced/update_trolls.py
+
+COPYRIGHT
+---------
+
+Copying is allowed under the terms of the WTFPL.
+See http://sam.zoy.org/wtfpl/ for more details.
+
+--------------------------------------------------------------------------------
+Fabrice Decroix <fabrice.decroix@gmail.com>
+
