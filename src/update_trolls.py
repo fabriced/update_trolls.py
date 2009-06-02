@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
   SYNOPSIS
-    update_trolls.py [--mouche] [--equipement] [--vue <id1>,<id2>] [--aptitudes] [--bonus] [--no-profil] [--debug]
+    update_trolls.py [--mouche] [--equipement] [--vue <id1>[,<id2>,..]] [--gowaps    <id1a>[,<id2>,.].] [--aptitudes] [--bonus] [--no-profil] [--debug]
 
   DESCRIPTION
     Script de mise a jour du système tactique des bricoltrolls. Par défaut,
@@ -37,7 +37,9 @@
       affiche ce message
 
   FILES
-    edit settings.py to
+    update_trolls_settings.py containt the login informations to the website
+      and the trolls settings
+
 """
 
 import sys, getopt
