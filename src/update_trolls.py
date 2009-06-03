@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
   SYNOPSIS
-    update_trolls.py [--mouche] [--equipement] [--vue <id1>[,<id2>,..]] [--gowaps    <id1a>[,<id2>,.].] [--aptitudes] [--bonus] [--no-profil] [--debug]
+    update_trolls.py [--mouche] [--equipement] [--vue <id1>[,<id2>,..]] [--gowaps <id1>[,<id2>,.].] [--aptitudes] [--bonus] [--no-profil] [--debug]
 
   DESCRIPTION
     Script de mise a jour du système tactique des bricoltrolls. Par défaut,
@@ -77,8 +77,14 @@ def run_update():
   global VUE_LIST, GOWAPS_LIST
 
   br = Browser()
+  br.set_debug_redirects(DEBUG)
+  br.set_debug_http(DEBUG)
   if not DEBUG:
     br.set_handle_robots( False )
+    br.set_handle_refresh( False )
+    br.set_handle_redirect( False )
+
+
     br.open(login_url)
 
     # gros hack tout laid car le formulaire n'a pas de nom
@@ -115,7 +121,10 @@ def run_update():
     if UPDATE_VUE and str(troll) in VUE_LIST:
       printed += " vue"
       if not DEBUG:
-        br.open("%s%d" % (vue_update_url, troll))
+        try:
+          br.open("%s%d" % (vue_update_url, troll))
+        except:
+          pass
         sleep(10)
     if UPDATE_GOWAPS and str(troll) in GOWAPS_LIST:
       printed += " gowaps"
