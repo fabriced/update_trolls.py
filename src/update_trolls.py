@@ -56,9 +56,9 @@ login_url = "%s/%s/login.php" % (website, coterie)
 full_update_url        = "%s/%s/update_info.php?id=" % (website, coterie)
 mouche_update_url      = "%s/%s/update_mouche.php?id=" % (website, coterie)
 equipement_update_url  = "%s/%s/update_equipement.php?id=" % (website, coterie)
-BM_update_url          = "%s/%s/update_bonusmalus.php?id=" % (website, coterie)
+bonus_update_url          = "%s/%s/update_bonusmalus.php?id=" % (website, coterie)
 GG_update_url          = "%s/%s/update_gigots.php?id=" % (website, coterie)
-competences_update_url = "%s/%s/update_aptitudes.php?id=" % (website, coterie)
+aptitudes_update_url = "%s/%s/update_aptitudes.php?id=" % (website, coterie)
 vue_update_url         = "%s/%s/update_vue.php?id=" % (website, coterie)
 gowaps_update_url      = "%s/%s/update_gowaps.php?id=" % (website, coterie)
 
@@ -82,7 +82,6 @@ def run_update():
   if not DEBUG:
     br.set_handle_robots( False )
     br.set_handle_refresh( False )
-    br.set_handle_redirect( False )
 
 
     br.open(login_url)
@@ -121,9 +120,11 @@ def run_update():
     if UPDATE_VUE and str(troll) in VUE_LIST:
       printed += " vue"
       if not DEBUG:
+        br.set_handle_redirect( False )
         try:
           br.open("%s%d" % (vue_update_url, troll))
         except:
+          br.set_handle_redirect( True )
           pass
         sleep(10)
     if UPDATE_GOWAPS and str(troll) in GOWAPS_LIST:
