@@ -42,6 +42,7 @@
 
 """
 
+import os
 import sys, getopt
 from mechanize import Browser
 from time import sleep
@@ -49,6 +50,7 @@ from time import sleep
 from update_trolls_settings import *
 
 DEBUG = False
+LOCKFILE = '/tmp/run_update.troll.doing'
 
 website = "http://trolls.ratibus.net"
 login_url = "%s/%s/login.php" % (website, coterie)
@@ -190,5 +192,9 @@ def read_options():
       sys.exit(0)
 
 if __name__ == '__main__':
+  if os.access(LOCKFILE, os.F_OK):
+    print >> sys.stderr, "update deja en cours"
+    sys.ext(-1)
+
   read_options()
   run_update()
