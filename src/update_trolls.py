@@ -194,7 +194,7 @@ def read_options():
 if __name__ == '__main__':
   if os.access(LOCKFILE, os.F_OK):
     print >> sys.stderr, "update deja en cours"
-    sys.ext(-1)
+    sys.exit(-1)
 
   read_options()
   run_update()
