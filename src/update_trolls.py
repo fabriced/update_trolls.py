@@ -50,9 +50,7 @@ from time import sleep
 from update_trolls_settings import *
 
 DEBUG = False
-LOCKFILE = '/tmp/run_update.troll.doing'
 
-website = "http://trolls.ratibus.net"
 login_url = "%s/%s/login.php" % (website, coterie)
 
 full_update_url        = "%s/%s/update_info.php?id=" % (website, coterie)
@@ -106,19 +104,19 @@ def run_update():
       printed += " profil"
       if not DEBUG:
         br.open("%s%d" % (full_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_MOUCHE:
       printed += " mouches"
       if not DEBUG:
         br.open("%s%d" % (mouche_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_EQUIPEMENT:
       printed += " equipement"
       if not DEBUG:
         br.open("%s%d" % (equipement_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
         br.open("%s%d" % (GG_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_VUE and str(troll) in VUE_LIST:
       printed += " vue"
       if not DEBUG:
@@ -128,22 +126,22 @@ def run_update():
         except:
           br.set_handle_redirect( True )
           pass
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_GOWAPS and str(troll) in GOWAPS_LIST:
       printed += " gowaps"
       if not DEBUG:
         br.open("%s%d" % (gowaps_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_APTITUDES:
       printed += " competences"
       if not DEBUG:
         br.open("%s%d" % (aptitudes_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     if UPDATE_BONUS:
       printed += " bonus"
       if not DEBUG:
         br.open("%s%d" % (bonus_update_url, troll))
-        sleep(10)
+        sleep(sleep_time)
     print printed
 
 def read_options():
