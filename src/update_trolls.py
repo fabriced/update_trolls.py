@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
   SYNOPSIS
-    update_trolls.py [--mouche] [--equipement] [--vue <id1>[,<id2>,..]] [--gowaps <id1>[,<id2>,.].] [--aptitudes] [--bonus] [--no-profil] [--debug]
+    update_trolls.py [--mouche] [--equipement] [--vue <id1>[,<id2>,..]] [--gowaps <id1>[,<id2>,.].] [--aptitudes] [--bonus] [--no-profil] [--debug] [--force]
 
   DESCRIPTION
     Script de mise a jour du système tactique des bricoltrolls. Par défaut,
@@ -36,6 +36,9 @@
     --help
       affiche ce message
 
+    --force
+      force l'exécution de la mise à jour sans vérifier l'existence de lockfile
+
   FILES
     update_trolls_settings.py containt the login informations to the website
       and the trolls settings
@@ -49,7 +52,7 @@ from time import sleep
 
 from update_trolls_settings import *
 
-DEBUG = False
+DEBUG = LOCKCHECK_REQUIRED = False
 
 login_url = "%s/%s/login.php" % (website, coterie)
 
@@ -145,13 +148,13 @@ def run_update():
     print printed
 
 def read_options():
-  global DEBUG, UPDATE_PROFILE, UPDATE_MOUCHE, UPDATE_EQUIPEMENT, UPDATE_VUE, UPDATE_APTITUDES, UPDATE_BONUS, UPDATE_GOWAPS
+  global DEBUG, LOCKCHECK_REQUIRED, UPDATE_PROFILE, UPDATE_MOUCHE, UPDATE_EQUIPEMENT, UPDATE_VUE, UPDATE_APTITUDES, UPDATE_BONUS, UPDATE_GOWAPS
   global VUE_LIST, GOWAPS_LIST
 
   try:
-    options, foo = getopt.getopt (sys.argv[1:], "mev:nabg:dh",
+    options, foo = getopt.getopt (sys.argv[1:], "mev:nabg:dhf",
               ['mouche', 'equipement', 'vue=', 'no-profil', 'aptitudes', 'bonus', 'gowaps=',
-               'debug', 'help'])
+               'debug', 'help', 'force'])
   except getopt.GetoptError, desc:
     print __doc__
     sys.exit(1)
@@ -189,8 +192,11 @@ def read_options():
       print __doc__
       sys.exit(0)
 
+    elif option in ('-f', '--force'):
+      LOCKCHECK_REQUIRED = True
+
 if __name__ == '__main__':
-  if os.access(LOCKFILE, os.F_OK):
+  if LOCKCHECK_REQUIRED and os.access(LOCKFILE, os.F_OK):
     print >> sys.stderr, "update deja en cours"
     sys.exit(-1)
 
