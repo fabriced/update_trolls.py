@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import csv
 
 # Login information to the tactical system
 username = ''
@@ -20,3 +21,22 @@ sleep_time = 6
 #   id2 : {'nom' : 'name of the troll'} }
 
 trolls = {}
+
+FROM_CSV = False
+
+if FROM_CSV:
+    # fichier csv de la forme:
+    # uid|nom|actif   
+    # avec actif etant True ou False
+    filename = 'trolls.csv'
+
+    try:
+        fd = open(filename)
+        spamReader = csv.reader(fd, delimiter='|')
+        for uid, nom, actif in spamReader:
+            if eval(actif):
+                trolls[uid] = {'nom': nom}
+    except:
+        pass
+    finally:
+        fd.close()
